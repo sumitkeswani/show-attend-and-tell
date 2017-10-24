@@ -1,7 +1,6 @@
 import string
 from nltk.stem.porter import *
 
-
 def _process_text(text):
 
 	'''Process the text. 
