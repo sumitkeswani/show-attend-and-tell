@@ -1,3 +1,4 @@
+import json
 import string
 from nltk.stem.porter import *
 
@@ -41,4 +42,58 @@ def _process_text(text):
 
 	return text
 
+def _preprocess_caption(path):
+
+	#function to preprocess captions and create a mapping from image ID to a collection of words present in its captions
+
+	#structure of caption mapping:
+	#{
+	# image_id1: [word1, word2 ....],
+	# image_id2: [word1, word2 ....],
+	#  .
+	#  .
+	#  .
+	#  .
+	# image_idn: [word1, word2 ....]
+	#}
+
+	cmapping = {}
+	#opening the JSON
+	with open(path) as captionfile:
+		caps = json.dump(captionfile, indent = 4)
+
+	#getting each caption, processing it, then storing it as words for that particular image ID
+	for key in caps["annotations"]:
+		capstring = _process_text(key["caption"].encode('utf8'))
+		cmapping[key["image_id"]] = set(cmapping[key["image_id"]].append(capstring.split()))
+
+	return cmapping
+
+def _preprocess_question(path):
+
+	#function to preprocess questions and create a mapping from image ID to a collection of words present in its questions
+
+	#structure of question mapping:
+	#{
+	# image_id1: [word1, word2 ....],
+	# image_id2: [word1, word2 ....],
+	#  .
+	#  .
+	#  .
+	#  .
+	# image_idn: [word1, word2 ....]
+	#}
+
+	qmapping = {}
+	with open(path) as questionfile:
+		ques = json.dump(questionfile, indent = 4)
+
+
+	#getting each question, processing it, then storing it as words for that particular image ID
+	for key in ques["questions"]:
+		qstring = _process_text(key["question"].encode('utf8'))
+		qmapping[key["image_id"]] = set(qmapping[key["image_id"]].append(qstring.split()))
+
+	return qmapping
+	
 
