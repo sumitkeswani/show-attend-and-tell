@@ -1,6 +1,6 @@
 import numpy as np
 import cPickle as pickle
-import hickle
+import pickle
 import time
 import os
 
@@ -10,7 +10,7 @@ def load_coco_data(data_path='./data', split='train'):
     start_t = time.time()
     data = {}
   
-    data['features'] = hickle.load(os.path.join(data_path, '%s.features.hkl' %split))
+    data['features'] = pickle.load(os.path.join(data_path, '%s.features.hkl' %split))
     with open(os.path.join(data_path, '%s.file.names.pkl' %split), 'rb') as f:
         data['file_names'] = pickle.load(f)   
     with open(os.path.join(data_path, '%s.captions.pkl' %split), 'rb') as f:

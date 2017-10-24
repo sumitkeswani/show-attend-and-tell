@@ -6,7 +6,7 @@ from core.utils import *
 import tensorflow as tf
 import numpy as np
 import pandas as pd
-import hickle
+import pickle
 import os
 import json
 
@@ -127,13 +127,13 @@ def main():
     # if word occurs less than word_count_threshold in training dataset, the word index is special unknown token.
     word_count_threshold = 1
     # vgg model path 
-    vgg_model_path = './data/imagenet-vgg-verydeep-19.mat'
+    vgg_model_path = './models/imagenet-vgg-verydeep-19.mat'
 
-    caption_file = 'data/annotations/captions_train2014.json'
+    caption_file = '../datasets/COCO-VQA/captions/training/annotations/captions_train2014.json'
     image_dir = 'image/%2014_resized/'
 
     # about 80000 images and 400000 captions for train dataset
-    train_dataset = _process_caption_data(caption_file='data/annotations/captions_train2014.json',
+    train_dataset = _process_caption_data(caption_file='../datasets/COCO-VQA/captions/training/annotations/captions_train2014.json',
                                           image_dir='image/train2014_resized/',
                                           max_length=max_length)
 
@@ -204,7 +204,7 @@ def main():
                 print ("Processed %d %s features.." % (end, split))
 
             # use hickle to save huge feature vectors
-            hickle.dump(all_feats, save_path)
+            pickle.dump(all_feats, save_path)
             print ("Saved %s.." % (save_path))
 
 
