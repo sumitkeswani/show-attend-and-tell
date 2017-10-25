@@ -95,5 +95,9 @@ def _preprocess_question(path):
 		qmapping[key["image_id"]] = set(qmapping[key["image_id"]].append(qstring.split()))
 
 	return qmapping
-	
+
+text = "This is super amaing! Really excited about it.. Just wait & watch!!"
+ans = _process_text(text.encode("utf-8"))
+print ans
+
 
